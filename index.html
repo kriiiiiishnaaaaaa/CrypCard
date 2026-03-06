@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>CrypCard — Crypto to Card Spending</title>
+<meta name="description" content="CrypCard — Create a crypto wallet and spend anywhere with your virtual Visa card."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 1: SPLASH
+══════════════════════════════════════════ -->
+<div class="screen active" id="screen-splash">
+  <div class="splash-bg">
+    <div class="splash-orb o1"></div>
+    <div class="splash-orb o2"></div>
+    <div class="splash-orb o3"></div>
+  </div>
+  <div class="splash-content">
+    <div class="logo-mark">
+      <div class="logo-hex">
+        <svg viewBox="0 0 60 60" fill="none">
+          <polygon points="30,2 55,16 55,44 30,58 5,44 5,16" fill="none" stroke="url(#g1)" stroke-width="2"/>
+          <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
+          <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="url(#g1)" font-size="18" font-family="Space Grotesk" font-weight="800">₿</text>
+        </svg>
+      </div>
+    </div>
+    <h1 class="brand-name">CrypCard</h1>
+    <p class="brand-tagline">Your Crypto, Spendable Everywhere</p>
+    <div class="splash-loader">
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 2: ONBOARDING
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-onboarding">
+  <div class="onboarding-wrap">
+    <button class="skip-btn" onclick="navigate('screen-auth')">Skip</button>
+    <div class="slides-container" id="slides">
+      <!-- Slide 1 -->
+      <div class="slide active">
+        <div class="slide-visual">
+          <div class="slide-graphic sg-wallet">
+            <div class="sg-card-stack">
+              <div class="sg-card c3"></div>
+              <div class="sg-card c2"></div>
+              <div class="sg-card c1">
+                <div class="sg-chip"></div>
+                <div class="sg-num">•••• •••• •••• 4291</div>
+                <div class="sg-brand">VISA</div>
+              </div>
+            </div>
+            <div class="sg-coins">
+              <div class="coin btc">₿</div>
+              <div class="coin eth">Ξ</div>
+              <div class="coin usdt">₮</div>
+            </div>
+          </div>
+        </div>
+        <h2>Your Crypto Wallet</h2>
+        <p>Instantly create a secure hot wallet supporting BTC, ETH, USDT & USDC. Your keys, your crypto.</p>
+      </div>
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="slide-visual">
+          <div class="slide-graphic sg-convert">
+            <div class="convert-flow">
+              <div class="cf-coin">
+                <div class="cf-icon btc">₿</div>
+                <span>BTC</span>
+              </div>
+              <div class="cf-arrow">
+                <div class="cf-arrow-line"></div>
+                <div class="cf-arrow-glow">→</div>
+              </div>
+              <div class="cf-coin">
+                <div class="cf-icon usd">$</div>
+                <span>USD</span>
+              </div>
+            </div>
+            <div class="rate-badge">1 BTC = $67,420.00</div>
+          </div>
+        </div>
+        <h2>Instant Conversion</h2>
+        <p>Convert any supported crypto to fiat balance in seconds. Best rates, zero hidden fees.</p>
+      </div>
+      <!-- Slide 3 -->
+      <div class="slide">
+        <div class="slide-visual">
+          <div class="slide-graphic sg-spend">
+            <div class="sg-virtual-card">
+              <div class="vc-bg"></div>
+              <div class="vc-logo">CrypCard</div>
+              <div class="vc-num">4291 8812 3344 5566</div>
+              <div class="vc-meta">
+                <span>12/28</span>
+                <span>VISA</span>
+              </div>
+            </div>
+            <div class="store-badges">
+              <div class="store-badge">🛒 Amazon</div>
+              <div class="store-badge">📦 Flipkart</div>
+              <div class="store-badge">+5K stores</div>
+            </div>
+          </div>
+        </div>
+        <h2>Spend Anywhere</h2>
+        <p>Your virtual Visa card works on Amazon, Flipkart, and 5,000+ online stores worldwide.</p>
+      </div>
+    </div>
+    <div class="slide-dots" id="slide-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="onboarding-actions">
+      <button class="btn-ghost" id="ob-prev" onclick="prevSlide()" style="visibility:hidden">← Back</button>
+      <button class="btn-primary" id="ob-next" onclick="nextSlide()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 3: AUTH
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-auth">
+  <div class="auth-wrap">
+    <div class="auth-logo">
+      <span class="logo-hex-sm">₿</span>
+      <span class="auth-brand">CrypCard</span>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+    <!-- Login -->
+    <div class="auth-form" id="form-login">
+      <div class="field-group">
+        <label>Email Address</label>
+        <input type="email" class="field" id="login-email" placeholder="you@example.com"/>
+      </div>
+      <div class="field-group">
+        <label>Password</label>
+        <input type="password" class="field" id="login-pass" placeholder="••••••••"/>
+      </div>
+      <a href="#" class="forgot-link">Forgot password?</a>
+      <button class="btn-primary btn-full" onclick="doLogin()">Login to CrypCard</button>
+      <div class="divider"><span>or</span></div>
+      <button class="btn-google btn-full" onclick="doGoogleAuth()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2a10.34 10.34 0 0 0-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92a8.78 8.78 0 0 0 2.68-6.62z"/><path fill="#34A853" d="M9 18a8.6 8.6 0 0 0 5.96-2.18l-2.92-2.26a5.43 5.43 0 0 1-8.09-2.85H.96v2.34A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.71A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.71V4.95H.96A9 9 0 0 0 0 9a9 9 0 0 0 .96 4.05l2.99-2.34z"/><path fill="#EA4335" d="M9 3.58a4.86 4.86 0 0 1 3.44 1.35l2.58-2.58A8.64 8.64 0 0 0 9 0 9 9 0 0 0 .96 4.95l2.99 2.34A5.36 5.36 0 0 1 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+    </div>
+    <!-- Signup -->
+    <div class="auth-form hidden" id="form-signup">
+      <div class="field-group">
+        <label>Full Name</label>
+        <input type="text" class="field" id="signup-name" placeholder="John Doe"/>
+      </div>
+      <div class="field-group">
+        <label>Email Address</label>
+        <input type="email" class="field" id="signup-email" placeholder="you@example.com"/>
+      </div>
+      <div class="field-group">
+        <label>Password</label>
+        <input type="password" class="field" id="signup-pass" placeholder="Create a strong password"/>
+      </div>
+      <div class="field-group">
+        <label>Referral Code <span class="opt">(optional)</span></label>
+        <input type="text" class="field" id="signup-ref" placeholder="CRYPT2025"/>
+      </div>
+      <button class="btn-primary btn-full" onclick="doSignup()">Create Account</button>
+      <div class="divider"><span>or</span></div>
+      <button class="btn-google btn-full" onclick="doGoogleAuth()">
+        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2a10.34 10.34 0 0 0-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92a8.78 8.78 0 0 0 2.68-6.62z"/><path fill="#34A853" d="M9 18a8.6 8.6 0 0 0 5.96-2.18l-2.92-2.26a5.43 5.43 0 0 1-8.09-2.85H.96v2.34A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.71A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.71V4.95H.96A9 9 0 0 0 0 9a9 9 0 0 0 .96 4.05l2.99-2.34z"/><path fill="#EA4335" d="M9 3.58a4.86 4.86 0 0 1 3.44 1.35l2.58-2.58A8.64 8.64 0 0 0 9 0 9 9 0 0 0 .96 4.95l2.99 2.34A5.36 5.36 0 0 1 9 3.58z"/></svg>
+        Sign up with Google
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 4: WALLET CREATION
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-wallet-create">
+  <div class="center-wrap">
+    <div class="creation-anim" id="creation-anim">
+      <div class="creation-ring r1"></div>
+      <div class="creation-ring r2"></div>
+      <div class="creation-ring r3"></div>
+      <div class="creation-icon">🔐</div>
+    </div>
+    <h2 class="creation-title" id="creation-title">Creating Your Wallet</h2>
+    <p class="creation-sub" id="creation-sub">Generating secure keys on-device...</p>
+    <div class="creation-steps" id="creation-steps">
+      <div class="step-item" id="step1"><span class="step-dot"></span> Generating seed entropy</div>
+      <div class="step-item" id="step2"><span class="step-dot"></span> Deriving HD wallet keys</div>
+      <div class="step-item" id="step3"><span class="step-dot"></span> Creating wallet addresses</div>
+      <div class="step-item" id="step4"><span class="step-dot"></span> Encrypting locally</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 5: RECOVERY PHRASE
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-recovery">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h2>🔑 Recovery Phrase</h2>
+      <p class="page-sub">Write these 12 words down and store them safely. This is the ONLY way to recover your wallet.</p>
+    </div>
+    <div class="phrase-warning">
+      ⚠️ Never share your recovery phrase with anyone. CrypCard will never ask for it.
+    </div>
+    <div class="phrase-grid" id="phrase-grid"></div>
+    <div class="phrase-actions">
+      <button class="btn-outline" onclick="copyPhrase()">📋 Copy to Clipboard</button>
+    </div>
+    <div class="confirm-checkbox">
+      <label class="checkbox-label">
+        <input type="checkbox" id="phrase-confirm" onchange="togglePhraseNext()"/>
+        <span class="checkmark"></span>
+        I've saved my recovery phrase securely
+      </label>
+    </div>
+    <button class="btn-primary btn-full" id="phrase-next-btn" onclick="navigate('screen-card-issue')" disabled>Continue to Card Setup →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN 6: CARD ISSUANCE
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-card-issue">
+  <div class="page-wrap">
+    <div class="page-header">
+      <h2>💳 Get Your Virtual Card</h2>
+      <p class="page-sub">Choose your card type and activate your virtual debit card instantly.</p>
+    </div>
+    <div class="card-type-select">
+      <div class="card-type-option selected" id="ct-visa" onclick="selectCardType('visa')">
+        <div class="ct-front">
+          <div class="ct-chip"></div>
+          <div class="ct-num">•••• •••• •••• ••••</div>
+          <div class="ct-brand ct-visa-brand">VISA</div>
+        </div>
+        <div class="ct-label">Visa Debit</div>
+        <div class="selected-check" id="check-visa">✓</div>
+      </div>
+      <div class="card-type-option" id="ct-mc" onclick="selectCardType('mastercard')">
+        <div class="ct-front mc-front">
+          <div class="ct-chip"></div>
+          <div class="ct-num">•••• •••• •••• ••••</div>
+          <div class="ct-brand ct-mc-brand"><span class="mc-r">●</span><span class="mc-o">●</span></div>
+        </div>
+        <div class="ct-label">Mastercard Debit</div>
+        <div class="selected-check hidden" id="check-mc">✓</div>
+      </div>
+    </div>
+    <div class="card-perks">
+      <div class="perk-item"><span>✅</span><span>Accepted at 5,000+ online stores</span></div>
+      <div class="perk-item"><span>✅</span><span>Instant virtual card — no waiting</span></div>
+      <div class="perk-item"><span>✅</span><span>One-tap freeze / unfreeze</span></div>
+      <div class="perk-item"><span>✅</span><span>Up to $10,000 daily spend limit</span></div>
+    </div>
+    <button class="btn-primary btn-full" onclick="issueCard()">🚀 Activate My Card</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN APP SHELL (Screens 7–13)
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-app">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-logo">Cryp<span>Card</span></div>
+    <div class="top-right">
+      <div class="notif-btn" onclick="showToast('No new notifications','info')">🔔</div>
+      <div class="avatar-btn" onclick="navigate('screen-settings')">
+        <img src="" alt="U" id="avatar-img" onerror="this.style.display='none'" style="display:none"/>
+        <span id="avatar-letter">J</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB CONTENT -->
+  <div class="tab-content" id="tab-home">
+
+    <!-- ── HOME DASHBOARD ── -->
+    <div class="home-scroll">
+      <!-- Total Balance -->
+      <div class="balance-card glass-card">
+        <div class="bc-label">Total Portfolio Value</div>
+        <div class="bc-amount" id="total-balance">$0.00</div>
+        <div class="bc-change positive" id="balance-change">↑ +2.4% today</div>
+        <div class="bc-actions">
+          <button class="bc-action" onclick="switchTab('deposit')">
+            <span>↓</span>Add Crypto
+          </button>
+          <button class="bc-action" onclick="switchTab('convert')">
+            <span>⇄</span>Convert
+          </button>
+          <button class="bc-action" onclick="switchTab('card')">
+            <span>💳</span>Card
+          </button>
+          <button class="bc-action" onclick="switchTab('tx')">
+            <span>📋</span>History
+          </button>
+        </div>
+      </div>
+
+      <!-- Virtual Card Preview -->
+      <div class="section-title-row">
+        <span>Your Card</span>
+        <button class="see-all" onclick="switchTab('card')">Manage →</button>
+      </div>
+      <div class="virtual-card" id="home-card" onclick="switchTab('card')">
+        <div class="vc-shine"></div>
+        <div class="vc-top">
+          <div class="vc-brand-name">CrypCard</div>
+          <div class="vc-status-badge" id="vc-status">ACTIVE</div>
+        </div>
+        <div class="vc-chip-row">
+          <div class="vc-chip-icon">▣</div>
+        </div>
+        <div class="vc-number" id="vc-num-display">4291 8812 3344 5566</div>
+        <div class="vc-footer">
+          <div class="vc-holder">
+            <div class="vc-meta-label">Card Holder</div>
+            <div class="vc-meta-val" id="vc-holder-name">JOHN DOE</div>
+          </div>
+          <div>
+            <div class="vc-meta-label">Expires</div>
+            <div class="vc-meta-val">12/28</div>
+          </div>
+          <div class="vc-network" id="vc-network-logo">VISA</div>
+        </div>
+      </div>
+
+      <!-- Fiat Balance -->
+      <div class="fiat-balance-card glass-card">
+        <div class="fb-left">
+          <div class="fb-label">Spendable Fiat Balance</div>
+          <div class="fb-amount" id="fiat-balance-display">$0.00</div>
+        </div>
+        <button class="btn-primary-sm" onclick="switchTab('convert')">+ Add Funds</button>
+      </div>
+
+      <!-- Crypto Assets -->
+      <div class="section-title-row">
+        <span>Crypto Assets</span>
+        <button class="see-all" onclick="switchTab('deposit')">Deposit →</button>
+      </div>
+      <div class="assets-list" id="assets-list"></div>
+
+      <!-- Recent Transactions -->
+      <div class="section-title-row">
+        <span>Recent Activity</span>
+        <button class="see-all" onclick="switchTab('tx')">All →</button>
+      </div>
+      <div class="tx-list" id="home-tx-list"></div>
+
+      <!-- Offers Banner -->
+      <div class="offers-banner" onclick="navigate('screen-offers')">
+        <div class="ob-left">
+          <div class="ob-tag">Cashback Offers</div>
+          <div class="ob-title">Earn up to 5% back on Amazon 🛒</div>
+        </div>
+        <div class="ob-arrow">→</div>
+      </div>
+
+      <!-- KYC Banner (shown if not verified) -->
+      <div class="kyc-banner" id="kyc-banner" onclick="navigate('screen-kyc')">
+        <span>🪪</span>
+        <div>
+          <strong>Complete KYC Verification</strong>
+          <p>Unlock higher limits — takes only 2 min</p>
+        </div>
+        <span>→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DEPOSIT TAB ── -->
+  <div class="tab-content hidden" id="tab-deposit">
+    <div class="home-scroll">
+      <div class="page-header">
+        <h2>Add Crypto</h2>
+        <p class="page-sub">Send crypto to your wallet address below</p>
+      </div>
+      <div class="coin-tabs" id="deposit-coin-tabs">
+        <button class="coin-tab active" data-coin="USDT" onclick="selectDepositCoin(this,'USDT')">USDT</button>
+        <button class="coin-tab" data-coin="USDC" onclick="selectDepositCoin(this,'USDC')">USDC</button>
+        <button class="coin-tab" data-coin="BTC" onclick="selectDepositCoin(this,'BTC')">BTC</button>
+        <button class="coin-tab" data-coin="ETH" onclick="selectDepositCoin(this,'ETH')">ETH</button>
+      </div>
+      <div class="network-select-wrap">
+        <label>Network</label>
+        <select class="field" id="network-select" onchange="updateNetwork()">
+          <option value="ERC-20">ERC-20 (Ethereum)</option>
+          <option value="TRC-20">TRC-20 (Tron)</option>
+          <option value="BEP-20">BEP-20 (BSC)</option>
+        </select>
+      </div>
+      <div class="qr-card glass-card">
+        <canvas id="qr-canvas" width="200" height="200"></canvas>
+        <div class="qr-address" id="qr-address-display">0x1a2b3c...</div>
+        <button class="btn-outline" onclick="copyAddress()">📋 Copy Address</button>
+      </div>
+      <div class="deposit-notice">
+        <div class="dn-item">⚠️ Only send <strong id="dep-coin-name">USDT</strong> to this address.</div>
+        <div class="dn-item">⏱️ Deposits typically confirm in 1–5 minutes.</div>
+        <div class="dn-item">💡 Minimum deposit: <strong>10 USDT</strong></div>
+      </div>
+      <!-- Simulate Deposit -->
+      <div class="glass-card" style="margin-top:16px">
+        <div style="font-weight:600;margin-bottom:12px">🧪 Simulate Deposit (Demo)</div>
+        <div class="field-group">
+          <label>Amount</label>
+          <input type="number" class="field" id="sim-amount" placeholder="e.g. 100"/>
+        </div>
+        <button class="btn-primary btn-full" onclick="simulateDeposit()">Simulate Deposit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONVERT TAB ── -->
+  <div class="tab-content hidden" id="tab-convert">
+    <div class="home-scroll">
+      <div class="page-header">
+        <h2>Convert to Fiat</h2>
+        <p class="page-sub">Instantly convert crypto to spendable USD balance</p>
+      </div>
+      <div class="convert-card glass-card">
+        <div class="cv-row">
+          <div class="cv-label">From</div>
+          <select class="field cv-select" id="cv-coin" onchange="updateRate()">
+            <option value="USDT">USDT — Tether</option>
+            <option value="USDC">USDC — USD Coin</option>
+            <option value="BTC">BTC — Bitcoin</option>
+            <option value="ETH">ETH — Ethereum</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Amount to Convert</label>
+          <input type="number" class="field" id="cv-amount" placeholder="0.00" oninput="calcConvert()"/>
+          <div class="cv-balance">Available: <span id="cv-avail">0.00</span></div>
+        </div>
+        <div class="rate-display" id="rate-display">
+          <div class="rd-left">
+            <div class="rd-label">Exchange Rate</div>
+            <div class="rd-val" id="rd-val">1 USDT = $1.00</div>
+          </div>
+          <div class="rd-fee">
+            <div class="rd-label">Fee</div>
+            <div class="rd-val">0.1%</div>
+          </div>
+        </div>
+        <div class="cv-divider">⇅</div>
+        <div class="field-group">
+          <label>You Receive (USD)</label>
+          <div class="cv-receive" id="cv-receive">$0.00</div>
+        </div>
+        <button class="btn-primary btn-full" onclick="doConvert()" id="cv-btn">Convert Now ⚡</button>
+      </div>
+      <div class="convert-history-title">Recent Conversions</div>
+      <div class="tx-list" id="convert-tx-list"></div>
+    </div>
+  </div>
+
+  <!-- ── TRANSACTIONS TAB ── -->
+  <div class="tab-content hidden" id="tab-tx">
+    <div class="home-scroll">
+      <div class="page-header">
+        <h2>Transactions</h2>
+      </div>
+      <div class="tx-filter-bar">
+        <button class="tx-filter active" onclick="filterTx(this,'all')">All</button>
+        <button class="tx-filter" onclick="filterTx(this,'crypto')">Crypto</button>
+        <button class="tx-filter" onclick="filterTx(this,'card')">Card</button>
+        <button class="tx-filter" onclick="filterTx(this,'convert')">Convert</button>
+      </div>
+      <div class="tx-list" id="all-tx-list"></div>
+    </div>
+  </div>
+
+  <!-- ── CARD TAB ── -->
+  <div class="tab-content hidden" id="tab-card">
+    <div class="home-scroll">
+      <div class="page-header">
+        <h2>Card Management</h2>
+      </div>
+
+      <!-- Full Virtual Card -->
+      <div class="virtual-card big-card" id="manage-card">
+        <div class="vc-shine"></div>
+        <div class="vc-top">
+          <div class="vc-brand-name">CrypCard</div>
+          <div class="vc-status-badge" id="manage-card-status">ACTIVE</div>
+        </div>
+        <div class="vc-chip-row"><div class="vc-chip-icon">▣</div></div>
+        <div class="vc-number" id="manage-card-num">4291 8812 3344 5566</div>
+        <div class="vc-footer">
+          <div class="vc-holder">
+            <div class="vc-meta-label">Card Holder</div>
+            <div class="vc-meta-val" id="manage-card-holder">JOHN DOE</div>
+          </div>
+          <div>
+            <div class="vc-meta-label">Expires</div>
+            <div class="vc-meta-val">12/28</div>
+          </div>
+          <div class="vc-network" id="manage-card-network">VISA</div>
+        </div>
+      </div>
+
+      <!-- Card Controls -->
+      <div class="card-controls-grid">
+        <button class="cc-btn" id="freeze-btn" onclick="toggleFreeze()">
+          <span id="freeze-icon">❄️</span>
+          <span id="freeze-label">Freeze Card</span>
+        </button>
+        <button class="cc-btn" onclick="revealCVV()">
+          <span>👁️</span>Reveal CVV
+        </button>
+        <button class="cc-btn" onclick="openLimitModal()">
+          <span>📊</span>Set Limit
+        </button>
+        <button class="cc-btn" onclick="navigate('screen-kyc')">
+          <span>🪪</span>KYC Status
+        </button>
+      </div>
+
+      <!-- Card Details (masked) -->
+      <div class="glass-card card-details-panel">
+        <div class="cdp-row">
+          <span class="cdp-label">Card Number</span>
+          <span class="cdp-val" id="cdp-num">4291 8812 3344 5566</span>
+        </div>
+        <div class="cdp-row">
+          <span class="cdp-label">Expiry</span>
+          <span class="cdp-val">12/28</span>
+        </div>
+        <div class="cdp-row">
+          <span class="cdp-label">CVV</span>
+          <span class="cdp-val" id="cdp-cvv">• • •</span>
+        </div>
+        <div class="cdp-row">
+          <span class="cdp-label">Daily Limit</span>
+          <span class="cdp-val" id="cdp-limit">$5,000</span>
+        </div>
+        <div class="cdp-row">
+          <span class="cdp-label">Status</span>
+          <span class="cdp-val status-active" id="cdp-status">Active</span>
+        </div>
+      </div>
+
+      <!-- Card Transactions -->
+      <div class="section-title-row" style="margin-top:16px">
+        <span>Card Transactions</span>
+      </div>
+      <div class="tx-list" id="card-tx-list"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="switchTab('home')">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" id="nav-deposit" onclick="switchTab('deposit')">
+      <span class="nav-icon">↓</span>
+      <span class="nav-label">Deposit</span>
+    </button>
+    <button class="nav-item" id="nav-convert" onclick="switchTab('convert')">
+      <span class="nav-icon">⇄</span>
+      <span class="nav-label">Convert</span>
+    </button>
+    <button class="nav-item" id="nav-tx" onclick="switchTab('tx')">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">History</span>
+    </button>
+    <button class="nav-item" id="nav-card" onclick="switchTab('card')">
+      <span class="nav-icon">💳</span>
+      <span class="nav-label">Card</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: KYC
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-kyc">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="page-header">
+      <h2>🪪 KYC Verification</h2>
+      <p class="page-sub">Complete identity verification to unlock higher limits</p>
+    </div>
+    <div class="kyc-status-card glass-card" id="kyc-status-card">
+      <div class="kyc-badge pending" id="kyc-badge">⏳ PENDING VERIFICATION</div>
+      <p id="kyc-status-text">Complete the steps below to verify your identity.</p>
+    </div>
+    <div class="kyc-steps">
+      <div class="kyc-step" id="kyc-s1">
+        <div class="ks-num" id="ks-n1">1</div>
+        <div class="ks-content">
+          <div class="ks-title">Personal Information</div>
+          <div class="ks-sub">Name, DOB, nationality</div>
+        </div>
+        <div class="ks-status" id="ks-st1">—</div>
+      </div>
+      <div class="kyc-step" id="kyc-s2">
+        <div class="ks-num" id="ks-n2">2</div>
+        <div class="ks-content">
+          <div class="ks-title">ID Document</div>
+          <div class="ks-sub">Passport, license, or national ID</div>
+        </div>
+        <div class="ks-status" id="ks-st2">—</div>
+      </div>
+      <div class="kyc-step" id="kyc-s3">
+        <div class="ks-num" id="ks-n3">3</div>
+        <div class="ks-content">
+          <div class="ks-title">Selfie Verification</div>
+          <div class="ks-sub">Live selfie with ID document</div>
+        </div>
+        <div class="ks-status" id="ks-st3">—</div>
+      </div>
+    </div>
+    <button class="btn-primary btn-full" onclick="startKYC()" id="kyc-start-btn">Start Verification</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: SETTINGS
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-settings">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="settings-profile glass-card">
+      <div class="sp-avatar" id="sp-avatar">J</div>
+      <div class="sp-info">
+        <div class="sp-name" id="sp-name">John Doe</div>
+        <div class="sp-email" id="sp-email">john@example.com</div>
+        <div class="sp-badge" id="sp-kyc-badge">KYC Pending</div>
+      </div>
+    </div>
+    <div class="settings-list">
+      <div class="settings-section">Security</div>
+      <div class="setting-item" onclick="toggleBiometric()">
+        <div class="si-left"><span>🔐</span><span>Biometric Lock</span></div>
+        <div class="toggle-wrap">
+          <div class="toggle" id="bio-toggle"></div>
+        </div>
+      </div>
+      <div class="setting-item" onclick="showToast('Feature coming soon','info')">
+        <div class="si-left"><span>🔑</span><span>Change PIN</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <div class="setting-item" onclick="showToast('Sessions cleared','success')">
+        <div class="si-left"><span>📱</span><span>Active Sessions</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <div class="settings-section">Account</div>
+      <div class="setting-item" onclick="navigate('screen-kyc')">
+        <div class="si-left"><span>🪪</span><span>KYC Verification</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <div class="setting-item" onclick="navigate('screen-referral')">
+        <div class="si-left"><span>🎁</span><span>Referral Program</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <div class="setting-item" onclick="navigate('screen-offers')">
+        <div class="si-left"><span>🏷️</span><span>Cashback Offers</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <div class="settings-section">Support</div>
+      <div class="setting-item" onclick="showToast('Support chat coming soon','info')">
+        <div class="si-left"><span>💬</span><span>Live Support</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <div class="setting-item" onclick="showToast('Privacy policy loaded','info')">
+        <div class="si-left"><span>📄</span><span>Privacy Policy</span></div>
+        <span class="si-arrow">→</span>
+      </div>
+      <button class="btn-danger btn-full" style="margin-top:24px" onclick="doLogout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: OFFERS
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-offers">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="page-header">
+      <h2>🏷️ Cashback Offers</h2>
+      <p class="page-sub">Earn crypto cashback when you spend with CrypCard</p>
+    </div>
+    <div class="offers-list" id="offers-list"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: REFERRAL
+══════════════════════════════════════════ -->
+<div class="screen" id="screen-referral">
+  <div class="page-wrap">
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <div class="page-header">
+      <h2>🎁 Referral Program</h2>
+      <p class="page-sub">Invite friends and earn $10 in crypto for each person who signs up</p>
+    </div>
+    <div class="referral-card glass-card">
+      <div class="rc-label">Your Referral Code</div>
+      <div class="rc-code" id="referral-code">CRYPT2025</div>
+      <button class="btn-primary btn-full" onclick="copyReferral()">📋 Copy Code</button>
+      <button class="btn-outline btn-full" style="margin-top:10px" onclick="showToast('Shared via native share sheet','success')">📤 Share Link</button>
+    </div>
+    <div class="referral-stats glass-card">
+      <div class="rs-item">
+        <div class="rs-val">12</div>
+        <div class="rs-label">Friends Invited</div>
+      </div>
+      <div class="rs-divider"></div>
+      <div class="rs-item">
+        <div class="rs-val">$120</div>
+        <div class="rs-label">Earned</div>
+      </div>
+      <div class="rs-divider"></div>
+      <div class="rs-item">
+        <div class="rs-val">9</div>
+        <div class="rs-label">Verified</div>
+      </div>
+    </div>
+    <div class="referral-how">
+      <div class="rh-title">How it works</div>
+      <div class="rh-step"><span class="rh-num">1</span><span>Share your referral code with a friend</span></div>
+      <div class="rh-step"><span class="rh-num">2</span><span>They sign up and complete KYC</span></div>
+      <div class="rh-step"><span class="rh-num">3</span><span>Both of you earn $10 in USDT</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
+<!-- CVV Modal -->
+<div class="modal-overlay hidden" id="cvv-modal">
+  <div class="modal-box">
+    <div class="modal-title">🔒 Reveal CVV</div>
+    <p class="modal-sub">Your CVV is sensitive. Do not share it with anyone.</p>
+    <div class="cvv-display" id="cvv-display">—</div>
+    <p style="font-size:12px;color:var(--muted);text-align:center">This hides again in 30 seconds</p>
+    <button class="btn-primary btn-full" onclick="closeModal('cvv-modal')">Done</button>
+  </div>
+</div>
+
+<!-- Limit Modal -->
+<div class="modal-overlay hidden" id="limit-modal">
+  <div class="modal-box">
+    <div class="modal-title">📊 Set Spend Limit</div>
+    <div class="field-group" style="margin-bottom:16px">
+      <label>Daily Limit (USD)</label>
+      <input type="range" id="limit-slider" min="100" max="10000" step="100" value="5000" oninput="updateLimitDisplay()"/>
+      <div class="limit-val" id="limit-val-display">$5,000</div>
+    </div>
+    <button class="btn-primary btn-full" onclick="saveLimit()">Save Limit</button>
+    <button class="btn-ghost btn-full" style="margin-top:8px" onclick="closeModal('limit-modal')">Cancel</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast hidden" id="toast">
+  <span id="toast-icon">✅</span>
+  <span id="toast-msg">Done</span>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
